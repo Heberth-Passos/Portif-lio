@@ -28,7 +28,7 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}.snow{display:none}}
 
 body{
   margin:0;
@@ -42,6 +42,9 @@ body{
 /* ---------- Fundo: degradê céu → neve ---------- */
 .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;
   background:linear-gradient(180deg,var(--sky) 0%,var(--mid) 38%,#eaf1f8 68%,var(--snow) 100%)}
+.snow{position:absolute;inset:0;pointer-events:none}
+.snow i{position:absolute;top:0;display:block;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(80,115,160,.35);animation:fall linear infinite}
+@keyframes fall{from{transform:translate3d(0,-12vh,0)}to{transform:translate3d(var(--dx,0),112vh,0)}}
 .blob{position:absolute;border-radius:50%;filter:blur(70px);transform:translateZ(0)}
 .b1{width:60vw;height:38vh;left:-10vw;top:6vh;background:#fff;opacity:.55}
 .b2{width:50vw;height:40vh;right:-12vw;top:34vh;background:#9db8d3;opacity:.38}
@@ -56,13 +59,17 @@ body{
 
 /* ---------- Hero ---------- */
 .hero{max-width:var(--maxw);margin:0 auto;padding:clamp(10px,2.5vw,24px) 20px clamp(28px,4.5vw,48px);display:flex;flex-direction:column;align-items:center;text-align:center}
-.logo{width:clamp(104px,15vw,144px);height:clamp(104px,15vw,144px);border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px rgba(255,255,255,.85),0 18px 36px -14px rgba(40,70,110,.55)}
+.logo{width:clamp(104px,15vw,144px);height:clamp(104px,15vw,144px);border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px rgba(255,255,255,.85),0 18px 36px -14px rgba(40,70,110,.55);transition:transform .45s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease}
+.logo:hover{transform:translateY(-6px) rotate(-5deg) scale(1.06);box-shadow:0 0 0 4px #fff,0 26px 40px -16px rgba(40,70,110,.6)}
+.logo:active{transform:translateY(-2px) rotate(3deg) scale(.98)}
 h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-height:1.1;letter-spacing:-.025em;color:var(--ink);overflow-wrap:anywhere}
+
 .tagline{margin:10px 0 0;color:var(--muted);font-size:clamp(.95rem,1.8vw,1.1rem)}
 
 /* ---------- Shorts (vertical) ---------- */
 .sec-label{margin:0 0 14px;text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .sec-label-2{margin-top:clamp(30px,4.5vw,48px)}
+#videos.wrap{max-width:1280px}
 .shorts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2.2vw,26px);max-width:780px;margin:0 auto}
 .shorts .thumb{aspect-ratio:9/16}
 .shorts .thumb.empty{aspect-ratio:9/16}
@@ -71,11 +78,11 @@ h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-hei
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2.2vw,26px)}
 
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:10px;
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:6px;
   box-shadow:0 14px 30px -22px rgba(40,70,110,.55);contain:layout paint;transition:transform .25s ease,box-shadow .25s ease}
 .card:hover{transform:translateY(-3px);box-shadow:0 20px 34px -22px rgba(40,70,110,.6)}
 
-.thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;border-radius:12px;overflow:hidden;
+.thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;margin:0;border-radius:14px;overflow:hidden;
   background:linear-gradient(135deg,#c5d6e8,#dfe9f4);cursor:pointer;font:inherit;color:inherit}
 .thumb img,.thumb iframe,.thumb video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover;background:#0f1724}
 .thumb img{transition:transform .4s ease}
@@ -93,9 +100,6 @@ h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-hei
 .empty-n{font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);color:rgba(60,92,132,.45);letter-spacing:-.02em}
 .empty-t{font-size:.85rem;color:var(--muted)}
 
-.cap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 6px 4px}
-.cap h3{margin:0;font-size:clamp(.88rem,1.5vw,1rem);font-weight:700;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tag{flex:none;font-size:.72rem;color:var(--muted);background:rgba(255,255,255,.75);border:1px solid var(--line);padding:3px 10px;border-radius:999px}
 
 /* ---------- Contato ---------- */
 .contact{padding-top:clamp(40px,7vw,80px);padding-bottom:clamp(36px,6vw,64px)}
@@ -137,7 +141,7 @@ h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-hei
 </head>
 <body>
   <!-- Fundo fixo: degradê céu → neve + dois blobs com blur estático (sem animação) -->
-  <div class="bg" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i></div>
+  <div class="bg" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><div class="snow" id="snow"></div></div>
 
   <header class="top">
     <nav aria-label="Main">
@@ -197,32 +201,33 @@ window.PORTFOLIO = {
   role: "Video Editor",
 
   // Linha pequena abaixo do título
-  tagline: "I edit long-form and short-form gaming videos, with a focus on pacing, clear storytelling, and well-timed humor.",
+  tagline: "Gaming highlights, montages & trailers",
 
   // Seus contatos (deixe como está e preencha quando quiser)
   contacts: {
-    discord: "hebertt54",          // ex.: "hebert" ou "hebert#0000"
-    email:   "heberthgpassos@gmail.com",
-    twitter: "https://x.com/Hebertt054"             // com ou sem @, ou o link completo
+    discord: "your-discord-id",          // ex.: "hebert" ou "hebert#0000"
+    email:   "your-email@example.com",
+    twitter: "your_username"             // com ou sem @, ou o link completo
   },
 
   // Seus 3 Shorts (vídeos verticais, aparecem no topo). Mesmos campos dos vídeos abaixo.
+  // Nenhum título/tag aparece no site; o "title" serve só para acessibilidade (leitores de tela).
   // Pode colar links do YouTube Shorts (youtube.com/shorts/...).
   shorts: [
-    { title: "Short title 1", tag: "Gameplay",   youtube: "", file: "", poster: "" },
-    { title: "Short title 2", tag: "Gameplay",    youtube: "", file: "", poster: "" },
-    { title: "Short title 3", tag: "Gameplay", youtube: "", file: "", poster: "" }
+    { title: "Short title 1", youtube: "", file: "", poster: "" },
+    { title: "Short title 2", youtube: "", file: "", poster: "" },
+    { title: "Short title 3", youtube: "", file: "", poster: "" }
   ],
 
-  // Seus 4 vídeos horizontais (aparecem em grade 2x2 nesta ordem).
+  // Seus 4 vídeos horizontais (grade 2x2, nesta ordem).
   // Use "youtube" com o link ou o ID do vídeo (11 caracteres),
   // OU "file" com o caminho de um .mp4 no repositório (ex.: "videos/montagem.mp4").
   // Se deixar vazio, aparece um cartão "Your video here".
   videos: [
-    { title: "Roblox", tag: "Gameplay", youtube: "https://youtu.be/a2rFVHoPo60", file: "", poster: "" },
-    { title: "Minecraft", tag: "Gameplay",    youtube: "https://youtu.be/g9YcuLsS9Qc", file: "", poster: "" },
-    { title: "Roblox", tag: "Gameplay",    youtube: "https://youtu.be/oCbstYXVZIU", file: "", poster: "" },
-    { title: "Minecraft", tag: "Gameplay",     youtube: "https://youtu.be/MwsF1vjZLME", file: "", poster: "" }
+    { title: "Video title 1", youtube: "", file: "", poster: "" },
+    { title: "Video title 2", youtube: "", file: "", poster: "" },
+    { title: "Video title 3", youtube: "", file: "", poster: "" },
+    { title: "Video title 4", youtube: "", file: "", poster: "" }
   ]
 };
   </script>
@@ -318,11 +323,7 @@ window.PORTFOLIO = {
       box.appendChild(t);
     }
 
-    var cap = el("div", "cap");
-    cap.appendChild(el("h3", "", v.title || "Video " + (i + 1)));
-    if (v.tag) cap.appendChild(el("span", "tag", v.tag));
     card.appendChild(box);
-    card.appendChild(cap);
     mount.appendChild(card);
   });
   }
@@ -362,6 +363,27 @@ window.PORTFOLIO = {
       done();
     }
   });
+
+  /* ---------- Snowfall (CSS animation, GPU-friendly) ---------- */
+  (function () {
+    var box = $("snow");
+    if (!box || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    var n = window.innerWidth < 640 ? 22 : 38;
+    var frag = document.createDocumentFragment();
+    for (var k = 0; k < n; k++) {
+      var f = document.createElement("i");
+      var s = 3 + Math.random() * 6;
+      f.style.cssText =
+        "left:" + (Math.random() * 100).toFixed(1) + "%;" +
+        "width:" + s.toFixed(1) + "px;height:" + s.toFixed(1) + "px;" +
+        "opacity:" + (0.45 + Math.random() * 0.45).toFixed(2) + ";" +
+        "--dx:" + Math.round(-60 + Math.random() * 120) + "px;" +
+        "animation-duration:" + (10 + Math.random() * 12).toFixed(1) + "s;" +
+        "animation-delay:-" + (Math.random() * 20).toFixed(1) + "s";
+      frag.appendChild(f);
+    }
+    box.appendChild(frag);
+  })();
 })();
 
   </script>
