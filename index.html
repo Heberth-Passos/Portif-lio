@@ -66,14 +66,14 @@ h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-hei
 
 .tagline{margin:10px 0 0;color:var(--muted);font-size:clamp(.95rem,1.8vw,1.1rem)}
 
-/* ---------- Shorts (vertical)
+/* ---------- Shorts (vertical) ---------- */
 .sec-label{margin:0 0 14px;text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .sec-label-2{margin-top:clamp(30px,4.5vw,48px)}
 #videos.wrap{max-width:1280px}
 .shorts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2.2vw,26px);max-width:780px;margin:0 auto}
 .shorts .thumb{aspect-ratio:9/16}
 .shorts .thumb.empty{aspect-ratio:9/16}
----------- */
+
 /* ---------- Grade 2x2 ---------- */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2.2vw,26px)}
@@ -158,9 +158,12 @@ h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-hei
     </section>
 
     <section id="videos" class="wrap" aria-label="Videos">
+      <!-- SHORTS OCULTOS: para mostrar de novo, apague as duas linhas marcadas com (A) e (B). -->
+      <!-- (A)
       <h2 class="sec-label">Shorts</h2>
       <div id="shorts" class="shorts"></div>
       <h2 class="sec-label sec-label-2">Long videos</h2>
+      (B) -->
       <div id="grid" class="grid"></div>
     </section>
 
@@ -210,7 +213,8 @@ window.PORTFOLIO = {
     twitter: "your_username"             // com ou sem @, ou o link completo
   },
 
-  // Seus 3 Shorts (vídeos verticais, aparecem no topo). Mesmos campos dos vídeos abaixo.
+  // Seus 3 Shorts (vídeos verticais, aparecem no topo). ATENÇÃO: estão ocultos no HTML por enquanto
+  // (procure por "SHORTS OCULTOS" no arquivo e apague as linhas (A) e (B) para mostrar). Mesmos campos dos vídeos abaixo.
   // Nenhum título/tag aparece no site; o "title" serve só para acessibilidade (leitores de tela).
   // Pode colar links do YouTube Shorts (youtube.com/shorts/...).
   shorts: [
@@ -327,7 +331,7 @@ window.PORTFOLIO = {
     mount.appendChild(card);
   });
   }
-  render(C.shorts, $("shorts"), 3);
+  if ($("shorts")) render(C.shorts, $("shorts"), 3);
   render(C.videos, $("grid"), 4);
 
   /* ---------- Contatos ---------- */
