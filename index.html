@@ -64,7 +64,7 @@ body{
 .logo:active{transform:translateY(-2px) rotate(3deg) scale(.98)}
 h1{margin:22px 0 0;font-weight:700;font-size:clamp(1.9rem,5.6vw,3.5rem);line-height:1.1;letter-spacing:-.025em;color:var(--ink);overflow-wrap:anywhere}
 
-.tagline{margin:10px 0 0;color:var(--muted);font-size:clamp(.95rem,1.8vw,1.1rem)}
+.tagline{margin:10px 0 0;color:var(--muted);font-size:clamp(.95rem,1.8vw,1.1rem);white-space:pre-line}
 
 /* ---------- Shorts (vertical) ---------- */
 .sec-label{margin:0 0 14px;text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -201,9 +201,12 @@ window.PORTFOLIO = {
   name: "Hebert",
   role: "Video Editor",
 
-  // Linha pequena abaixo do título
-  tagline: "Roblox & Minecraft Video Editor"
-  "Fast cuts, clean motion, videos that hook.",
+  // Texto pequeno abaixo do título. Cada item da lista é uma linha.
+  // CUIDADO: separe as linhas com vírgula (menos a última) e mantenha as aspas.
+  tagline: [
+    "Roblox & Minecraft Video Editor",
+    "Fast cuts, clean motion, videos that hook."
+  ],
 
   // Seus contatos (deixe como está e preencha quando quiser)
   contacts: {
@@ -251,7 +254,8 @@ window.PORTFOLIO = {
   var role = (C.role || "Video Editor").trim();
   var heading = name + " | " + role;
   $("nome").textContent = heading;
-  if (C.tagline) $("tagline").textContent = C.tagline;
+  var tl = Array.isArray(C.tagline) ? C.tagline.join("\n") : C.tagline;
+  if (tl) $("tagline").textContent = tl;
   document.title = heading;
   $("foot").textContent = "© " + new Date().getFullYear() + " " + name;
 
