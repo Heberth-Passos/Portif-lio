@@ -383,13 +383,31 @@ window.PORTFOLIO = {
       box = el("button", "thumb");
       box.type = "button";
       box.setAttribute("aria-label", "Play: " + (v.title || "video " + (i + 1)));
-      var src = v.poster || (id ? "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg" : "");
-      if (src) {
+      // Miniatura: sua imagem (poster) > capa HD do YouTube > capa normal do YouTube.
+      // Se uma falhar, tenta a próxima; se todas falharem, mostra só o fundo com o botão de play.
+      var srcs = [];
+      if (v.poster) srcs.push(v.poster);
+      if (id) {
+        srcs.push("https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg");
+        srcs.push("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg");
+      }
+      if (srcs.length) {
         var img = document.createElement("img");
-        img.src = src;
+        var si = 0;
+        var nextSrc = function () {
+          si++;
+          if (si < srcs.length) { img.src = srcs[si]; }
+          else { if (img.parentNode) img.parentNode.removeChild(img); box.classList.add("no-img"); }
+        };
         img.alt = "";
         img.loading = i < 2 ? "eager" : "lazy";
         img.decoding = "async";
+        img.addEventListener("error", nextSrc);
+        img.addEventListener("load", function () {
+          // O YouTube devolve uma imagem minúscula (120px) quando a capa HD não existe.
+          if (img.naturalWidth && img.naturalWidth <= 120 && si < srcs.length - 1) nextSrc();
+        });
+        img.src = srcs[0];
         box.appendChild(img);
       } else {
         box.classList.add("no-img");
